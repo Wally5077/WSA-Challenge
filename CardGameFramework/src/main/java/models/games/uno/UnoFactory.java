@@ -14,6 +14,7 @@ import models.games.uno.players.UnoPlayer;
 import java.util.List;
 import java.util.Scanner;
 
+import static models.common.cards.Deck.emptyDeck;
 import static models.games.uno.Uno.MAX_PLAYER;
 import static utils.StreamUtil.generate;
 
@@ -25,7 +26,7 @@ public class UnoFactory implements CardGameFactory<Uno> {
         List<UnoPlayer> players = generate(numberOfHumanPlayers, position -> new UnoHumanPlayer(commandLine));
         players.addAll(generate(MAX_PLAYER - numberOfHumanPlayers, UnoAIPlayer::new));
         var deck = Deck.create(Color.class, Number.class, UnoCard::new);
-        Uno uno = new Uno(players, deck);
+        Uno uno = new Uno(players, deck, emptyDeck());
         players.forEach(player -> player.setUnoEventListener(uno));
         return uno;
     }

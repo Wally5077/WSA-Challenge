@@ -25,15 +25,15 @@ public class Uno extends CardGame<UnoPlayer, UnoCard> implements UnoEventListene
     private final Deck<UnoCard> discardDeck;
     private ShowCard<UnoPlayer, UnoCard> topPlay;
 
-    public Uno(Collection<UnoPlayer> players, Deck<UnoCard> unoCards) {
+    public Uno(Collection<UnoPlayer> players, Deck<UnoCard> unoCards, Deck<UnoCard> discardDeck) {
         super(players, unoCards);
-        discardDeck = new Deck<>();
+        this.discardDeck = discardDeck;
     }
 
     @Override
     protected void drawCards() {
         super.drawCards();
-        notifyPlayerTopPlayChanged(create(deck::dealCard));
+        notifyPlayerTopPlayChanged(create(getDeck()::dealCard));
     }
 
     @Override
@@ -67,6 +67,7 @@ public class Uno extends CardGame<UnoPlayer, UnoCard> implements UnoEventListene
 
     @Override
     public void onUnavailableHands(CardGamePlayer<UnoCard> player) {
+        var deck = getDeck();
         deck.withdrawIfEmpty(discardDeck);
         player.drawCard(deck.dealCard());
     }

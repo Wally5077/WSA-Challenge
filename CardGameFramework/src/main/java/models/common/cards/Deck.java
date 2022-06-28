@@ -20,6 +20,10 @@ public record Deck<Card>(LinkedList<Card> cards) implements Iterable<Card> {
         this(new LinkedList<>(requireNonNullElseGet(deck, Collections::emptyList)));
     }
 
+    public static <Card> Deck<Card> emptyDeck() {
+        return new Deck<>();
+    }
+
     public static <Symbol extends Enum<Symbol>, Point extends Enum<Point>, Card extends GameCard<Symbol, Point>> Deck<Card> create(Class<Symbol> symbolClass, Class<Point> pointClass, BiFunction<Symbol, Point, Card> mapper) {
         var symbols = symbolClass.getEnumConstants();
         var points = pointClass.getEnumConstants();

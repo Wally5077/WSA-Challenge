@@ -11,7 +11,7 @@ import static utils.StreamUtil.mapToList;
 
 public abstract class CardGame<Player extends CardGamePlayer<Card>, Card extends Comparable<Card>> {
 
-    protected final Deck<Card> deck;
+    private final Deck<Card> deck;
     private final List<Player> players;
     private int round;
 
@@ -68,6 +68,10 @@ public abstract class CardGame<Player extends CardGamePlayer<Card>, Card extends
     }
 
     protected abstract Optional<Player> findWinner();
+
+    protected Deck<Card> getDeck() {
+        return deck;
+    }
 
     protected List<Player> getPlayers() {
         return copyOf(players);

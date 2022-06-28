@@ -26,16 +26,16 @@ public class Main {
         var spriteCollision = new WaterFireSpriteCollision(new HeroFireSpriteCollision(new HeroWaterCollision()));
         var sprites = generateSprites();
         World world = new World(sprites, spriteCollision);
-        String isContinueMoving;
-        do {
+        boolean isContinueMoving = true;
+        while (isContinueMoving) {
             System.out.println(world);
             System.out.println("[系統]開始移動目標");
             int x1 = in.nextInt();
             int x2 = in.nextInt();
             world.moveSprite(x1, x2);
             System.out.println("[系統]還要繼續移動嗎？（Y/N）");
-            isContinueMoving = in.next();
-        } while ("Y".equalsIgnoreCase(isContinueMoving));
+            isContinueMoving = "Y".equalsIgnoreCase(in.next());
+        }
     }
 
     private static Collection<Sprite> generateSprites() {

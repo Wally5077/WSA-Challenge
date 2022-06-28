@@ -2,8 +2,6 @@ package models.games.uno.cards;
 
 import models.common.cards.GameCard;
 
-import java.util.Objects;
-
 /**
  * @author - wally55077@gmail.com
  */
@@ -19,6 +17,6 @@ public class UnoCard extends GameCard<Color, Number> implements Comparable<UnoCa
     }
 
     public boolean isAvailableCard(UnoCard card) {
-        return Objects.equals(symbol, card.symbol) || Objects.equals(point, card.point);
+        return symbol == card.symbol || point == card.point;
     }
 }
