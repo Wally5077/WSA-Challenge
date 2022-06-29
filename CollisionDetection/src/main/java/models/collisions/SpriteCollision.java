@@ -19,19 +19,32 @@ public abstract class SpriteCollision<CollideSprite extends Sprite, BeCollidedSp
         setSpriteCollision(spriteCollision);
     }
 
-    @SuppressWarnings("unchecked")
     public void collide(Sprite collideSprite, Sprite beCollidedSprite) {
         requireNonNull(collideSprite);
         requireNonNull(beCollidedSprite);
-        var collideSpriteClass = getCollideSpriteClass();
-        var beCollidedSpriteClass = getBeCollidedSpriteClass();
-        if (collideSpriteClass.isInstance(collideSprite) && beCollidedSpriteClass.isInstance(beCollidedSprite)) {
-            doCollision((CollideSprite) collideSprite, (BeCollidedSprite) beCollidedSprite);
-        }
-        if (collideSpriteClass.isInstance(beCollidedSprite) && beCollidedSpriteClass.isInstance(collideSprite)) {
-            doCollision((CollideSprite) beCollidedSprite, (BeCollidedSprite) collideSprite);
+        if (match(collideSprite, beCollidedSprite)) {
+            doCollision(getCollideSprite(collideSprite, beCollidedSprite), getBeCollidedSprite(collideSprite, beCollidedSprite));
         }
         spriteCollision.collide(collideSprite, beCollidedSprite);
+    }
+
+    private boolean match(Sprite collideSprite, Sprite beCollidedSprite) {
+        var collideSpriteClass = getCollideSpriteClass();
+        var beCollidedSpriteClass = getBeCollidedSpriteClass();
+        return collideSpriteClass.isInstance(collideSprite) && beCollidedSpriteClass.isInstance(beCollidedSprite)
+                || collideSpriteClass.isInstance(beCollidedSprite) && beCollidedSpriteClass.isInstance(collideSprite);
+    }
+
+    @SuppressWarnings("unchecked")
+    private CollideSprite getCollideSprite(Sprite collideSprite, Sprite beCollidedSprite) {
+        var collideSpriteClass = getCollideSpriteClass();
+        return (CollideSprite) (collideSpriteClass.isInstance(collideSprite) ? collideSprite : beCollidedSprite);
+    }
+
+    @SuppressWarnings("unchecked")
+    private BeCollidedSprite getBeCollidedSprite(Sprite collideSprite, Sprite beCollidedSprite) {
+        var beCollidedSpriteClass = getBeCollidedSpriteClass();
+        return (BeCollidedSprite) (beCollidedSpriteClass.isInstance(collideSprite) ? collideSprite : beCollidedSprite);
     }
 
     protected abstract Class<CollideSprite> getCollideSpriteClass();
