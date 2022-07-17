@@ -33,9 +33,9 @@ public class Main {
     private static Collection<Sprite> generateSprites() {
         List<Sprite> sprites = new ArrayList<>(NUMBER_OF_SPRITES);
         sprites.add(new Hero());
-        sprites.addAll(generate(5, index -> new Water()));
-        sprites.addAll(generate(5, index -> new Fire()));
-        sprites.addAll(generate(NUMBER_OF_SPRITES - sprites.size(), index -> new Sprite()));
+        sprites.addAll(generate(5, Water::new));
+        sprites.addAll(generate(5, Fire::new));
+        sprites.addAll(generate(NUMBER_OF_SPRITES - sprites.size(), () -> new Sprite()));
         shuffle(sprites);
         return sprites;
     }

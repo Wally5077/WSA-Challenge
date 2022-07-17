@@ -1,11 +1,13 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -44,15 +46,25 @@ public class StreamUtil {
     }
 
     public static <T, R> List<R> flatMapToList(T[] array, Function<? super T, ? extends Stream<? extends R>> mapper) {
-        return stream(array)
-                .flatMap(mapper)
-                .collect(toList());
+        return flatMapToCollection(array, mapper, ArrayList::new);
     }
 
     public static <T, R> Stack<R> flatMapToStack(T[] array, Function<? super T, ? extends Stream<? extends R>> mapper) {
+        return flatMapToCollection(array, mapper, Stack::new);
+    }
+
+    private static <T, R, C extends Collection<R>> C flatMapToCollection(T[] array,
+                                                                         Function<? super T, ? extends Stream<? extends R>> mapper,
+                                                                         Supplier<C> collectionFactory) {
         return stream(array)
                 .flatMap(mapper)
-                .collect(toCollection(Stack::new));
+                .collect(toCollection(collectionFactory));
+    }
+
+    public static <T> List<T> generate(int count, Supplier<? extends T> supplier) {
+        return Stream.generate(supplier)
+                .limit(count)
+                .collect(toList());
     }
 
     public static <T> List<T> generate(int count, IntFunction<? extends T> mapper) {

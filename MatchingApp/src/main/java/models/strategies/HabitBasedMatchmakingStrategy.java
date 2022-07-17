@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Integer.compare;
+import static java.util.Comparator.reverseOrder;
+import static java.util.Objects.requireNonNullElseGet;
 import static utils.StreamUtil.intersectionCount;
 
 public final class HabitBasedMatchmakingStrategy implements MatchmakingStrategy {
@@ -14,11 +16,11 @@ public final class HabitBasedMatchmakingStrategy implements MatchmakingStrategy 
     private final Comparator<Long> habitComparator;
 
     public HabitBasedMatchmakingStrategy() {
-        this(Long::compareTo);
+        this(reverseOrder());
     }
 
     public HabitBasedMatchmakingStrategy(Comparator<Long> habitComparator) {
-        this.habitComparator = habitComparator;
+        this.habitComparator = requireNonNullElseGet(habitComparator, Comparator::reverseOrder);
     }
 
     @Override

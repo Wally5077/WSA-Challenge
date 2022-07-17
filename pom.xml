@@ -17,12 +17,28 @@
         <module>CardGameFramework</module>
         <module>CollisionDetection</module>
         <module>Common</module>
+        <module>Youtube</module>
     </modules>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
+        <junit-platform.version>5.7.2</junit-platform.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-platform.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

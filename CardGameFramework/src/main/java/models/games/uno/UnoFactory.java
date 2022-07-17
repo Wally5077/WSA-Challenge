@@ -23,7 +23,7 @@ public class UnoFactory implements CardGameFactory<Uno> {
     @Override
     public Uno createWithHumanPlayer(int numberOfHumanPlayers) {
         CommandLine commandLine = new ScannerCommandLineAdapter(new Scanner(System.in));
-        List<UnoPlayer> players = generate(numberOfHumanPlayers, position -> new UnoHumanPlayer(commandLine));
+        List<UnoPlayer> players = generate(numberOfHumanPlayers, () -> new UnoHumanPlayer(commandLine));
         players.addAll(generate(MAX_PLAYER - numberOfHumanPlayers, UnoAIPlayer::new));
         var deck = Deck.create(Color.class, Number.class, UnoCard::new);
         Uno uno = new Uno(players, deck, emptyDeck());

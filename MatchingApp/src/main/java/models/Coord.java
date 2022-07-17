@@ -11,9 +11,6 @@ public record Coord(int x, int y) implements Comparable<Coord> {
 
     @Override
     public String toString() {
-        return "Coord{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+       return String.format("Coord{x=%d, y=%d}", x, y);
     }
 }

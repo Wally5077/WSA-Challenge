@@ -28,7 +28,7 @@ public class Showdown {
     public Showdown(InputStream in) {
         this.input = new Scanner(in);
         this.players = new ArrayList<>(MAX_PLAYER);
-        this.deck = new Deck();
+        this.deck = Deck.create(Card::new);
     }
 
     public void start() {
@@ -46,8 +46,8 @@ public class Showdown {
     private void createPlayers() {
         System.out.printf("[系統] 請輸入人類玩家數量 (最多 %d 人) : ", MAX_PLAYER);
         int humanPlayerAmount = input.nextInt(MAX_PLAYER);
-        players.addAll(generate(humanPlayerAmount, position -> new HumanPlayer(this, input)));
-        players.addAll(generate(MAX_PLAYER - humanPlayerAmount, position -> new AIPlayer(this)));
+        players.addAll(generate(humanPlayerAmount, () -> new HumanPlayer(this, input)));
+        players.addAll(generate(MAX_PLAYER - humanPlayerAmount, () -> new AIPlayer(this)));
         players.forEach(Player::nameSelf);
     }
 

@@ -6,6 +6,7 @@ import models.Individual;
 import java.util.Comparator;
 
 import static java.lang.Integer.compare;
+import static java.util.Objects.requireNonNullElseGet;
 
 public final class DistanceBasedMatchmakingStrategy implements MatchmakingStrategy {
 
@@ -16,7 +17,7 @@ public final class DistanceBasedMatchmakingStrategy implements MatchmakingStrate
     }
 
     public DistanceBasedMatchmakingStrategy(Comparator<Integer> coordComparator) {
-        this.coordComparator = coordComparator;
+        this.coordComparator = requireNonNullElseGet(coordComparator, Comparator::naturalOrder);
     }
 
     @Override

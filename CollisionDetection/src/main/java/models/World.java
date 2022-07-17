@@ -15,7 +15,7 @@ import static utils.StreamUtil.generate;
  */
 public class World {
 
-    public final static int NUMBER_OF_SPRITES = 30;
+    public static final int NUMBER_OF_SPRITES = 30;
     private List<Sprite> sprites;
     private SpriteCollision<? extends Sprite, ? extends Sprite> collision;
 

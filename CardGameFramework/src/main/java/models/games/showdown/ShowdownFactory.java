@@ -22,7 +22,7 @@ public class ShowdownFactory implements CardGameFactory<Showdown> {
     @Override
     public Showdown createWithHumanPlayer(int numberOfHumanPlayers) {
         CommandLine commandLine = new ScannerCommandLineAdapter(new Scanner(System.in));
-        List<PokerPlayer> players = generate(numberOfHumanPlayers, position -> new PokerHumanPlayer(commandLine));
+        List<PokerPlayer> players = generate(numberOfHumanPlayers, () -> new PokerHumanPlayer(commandLine));
         players.addAll(generate(MAX_PLAYER - numberOfHumanPlayers, PokerAIPlayer::new));
         var deck = Deck.create(Suit.class, Rank.class, PokerCard::new);
         return new Showdown(players, deck);

@@ -16,12 +16,12 @@ import static utils.StreamUtil.generate;
  * @author - wally55077@gmail.com
  */
 public class Main {
-    private final static Random RANDOM = new Random();
-    private final static int AGE = 18;
-    private final static String[] HABITS = {"打籃球", "烹飪", "玩遊戲", "唱歌", "健身", "看書", "跳舞", "寫作"};
-    private final static int COORD_RADIUS = 5;
-    private final static List<Integer> COORD_RANGE = rangeClosed(-1 * COORD_RADIUS, COORD_RADIUS).boxed().toList();
-    private final static MatchmakingStrategy[] MATCHMAKING_STRATEGIES = {
+    private static final Random RANDOM = new Random();
+    private static final int AGE = 18;
+    private static final String[] HABITS = {"打籃球", "烹飪", "玩遊戲", "唱歌", "健身", "看書", "跳舞", "寫作"};
+    private static final int COORD_RADIUS = 5;
+    private static final List<Integer> COORD_RANGE = rangeClosed(-1 * COORD_RADIUS, COORD_RADIUS).boxed().toList();
+    private static final MatchmakingStrategy[] MATCHMAKING_STRATEGIES = {
             MatchmakingStrategy.matching(Individual::getCoord)
                     .thenMatching(Individual::getId),
             MatchmakingStrategy.matching(Individual::getHabits, StreamUtil::intersectionCount)
