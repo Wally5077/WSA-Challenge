@@ -21,21 +21,13 @@ import static utils.StreamUtil.generate;
  */
 public class Main {
 
+    private static final Scanner INPUT = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
         var spriteCollision = new WaterFireSpriteCollision(new HeroFireSpriteCollision(new HeroWaterCollision()));
         var sprites = generateSprites();
         World world = new World(sprites, spriteCollision);
-        boolean isContinueMoving = true;
-        while (isContinueMoving) {
-            System.out.println(world);
-            System.out.println("[系統]開始移動目標");
-            int x1 = in.nextInt();
-            int x2 = in.nextInt();
-            world.moveSprite(x1, x2);
-            System.out.println("[系統]還要繼續移動嗎？（Y/N）");
-            isContinueMoving = "Y".equalsIgnoreCase(in.next());
-        }
+        startGame(world);
     }
 
     private static Collection<Sprite> generateSprites() {
@@ -46,5 +38,20 @@ public class Main {
         sprites.addAll(generate(NUMBER_OF_SPRITES - sprites.size(), index -> new Sprite()));
         shuffle(sprites);
         return sprites;
+    }
+
+    private static void startGame(World world) {
+        do {
+            System.out.println(world);
+            moveSprite(world);
+            System.out.println("[系統]還要繼續移動嗎？（Y/N）");
+        } while ("Y".equalsIgnoreCase(INPUT.next()));
+    }
+
+    private static void moveSprite(World world) {
+        System.out.println("[系統]開始移動目標");
+        int x1 = INPUT.nextInt();
+        int x2 = INPUT.nextInt();
+        world.moveSprite(x1, x2);
     }
 }

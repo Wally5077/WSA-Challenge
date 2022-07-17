@@ -35,23 +35,21 @@ public abstract class SpriteCollision<CollideSprite extends Sprite, BeCollidedSp
                 || collideSpriteClass.isInstance(beCollidedSprite) && beCollidedSpriteClass.isInstance(collideSprite);
     }
 
+    protected abstract void doCollision(CollideSprite collideSprite, BeCollidedSprite beCollidedSprite);
+
     @SuppressWarnings("unchecked")
     private CollideSprite getCollideSprite(Sprite collideSprite, Sprite beCollidedSprite) {
-        var collideSpriteClass = getCollideSpriteClass();
-        return (CollideSprite) (collideSpriteClass.isInstance(collideSprite) ? collideSprite : beCollidedSprite);
+        return (CollideSprite) (getCollideSpriteClass().isInstance(collideSprite) ? collideSprite : beCollidedSprite);
     }
 
     @SuppressWarnings("unchecked")
     private BeCollidedSprite getBeCollidedSprite(Sprite collideSprite, Sprite beCollidedSprite) {
-        var beCollidedSpriteClass = getBeCollidedSpriteClass();
-        return (BeCollidedSprite) (beCollidedSpriteClass.isInstance(collideSprite) ? collideSprite : beCollidedSprite);
+        return (BeCollidedSprite) (getBeCollidedSpriteClass().isInstance(collideSprite) ? collideSprite : beCollidedSprite);
     }
 
     protected abstract Class<CollideSprite> getCollideSpriteClass();
 
     protected abstract Class<BeCollidedSprite> getBeCollidedSpriteClass();
-
-    protected abstract void doCollision(CollideSprite collideSprite, BeCollidedSprite beCollidedSprite);
 
     public void setSpriteCollision(SpriteCollision<? extends Sprite, ? extends Sprite> spriteCollision) {
         this.spriteCollision = spriteCollision;
